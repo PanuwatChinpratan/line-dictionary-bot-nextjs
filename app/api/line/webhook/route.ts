@@ -92,7 +92,7 @@ export async function POST(req: NextRequest) {
       } catch {
         await reply(
           event.replyToken,
-          `Sorry, something went wrong looking up "${word}".`
+          `Sorry, something went wrong looking up "${word}".Please use English.`
         );
       }
     })

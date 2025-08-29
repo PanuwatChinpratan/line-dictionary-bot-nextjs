@@ -4,11 +4,6 @@ import DictionarySearch from "./dictionary-search";
 export default function Home() {
   return (
     <main className="flex flex-col items-center gap-4 p-8">
-      <h1 className="text-2xl font-bold">LINE Dictionary Bot</h1>
-      <p>
-        Send an English word to the LINE bot to receive noun and verb
-        definitions.
-      </p>
       <DictionarySearch />
       <h1 className="text-2xl font-bold">Add LINE Bot</h1>
       <p>Scan the QR code below to add the bot on LINE.</p>

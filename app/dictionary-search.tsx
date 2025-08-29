@@ -8,17 +8,19 @@ import { fetchDictionary, formatResult } from "../lib/dictionary";
 const wordSchema = z
   .string()
   .trim()
-  .regex(/^[A-Za-z]+$/, "Please enter an English word");
+  .regex(/[A-Za-z]+/, "Please include an English word")
+  .transform((val) => val.match(/[A-Za-z]+/)![0].toLowerCase());
 
 export default function DictionarySearch() {
   const [input, setInput] = useState("");
   const [word, setWord] = useState<string | null>(null);
   const [validationError, setValidationError] = useState<string | null>(null);
 
-  const { data, isFetching } = useQuery({
+  const { data, isFetching, isError, error } = useQuery({
     queryKey: ["dictionary", word],
     queryFn: () => fetchDictionary(word!),
     enabled: !!word,
+    retry: false,
   });
 
   function handleSubmit(e: React.FormEvent) {
@@ -26,10 +28,11 @@ export default function DictionarySearch() {
     const parsed = wordSchema.safeParse(input);
     if (!parsed.success) {
       setValidationError(parsed.error.issues[0].message);
+      setWord(null);
       return;
     }
     setValidationError(null);
-    setWord(parsed.data.toLowerCase());
+    setWord(parsed.data);
   }
 
   return (
@@ -57,7 +60,10 @@ export default function DictionarySearch() {
       {validationError && (
         <p className="text-sm text-red-500">{validationError}</p>
       )}
-      {isFetching && <p>Loading...</p>}
+      {isError && error instanceof Error && (
+        <p className="text-sm text-red-500">{error.message}</p>
+      )}
+      {isFetching && !isError && <p>Loading...</p>}
       {data && word && (
         <pre className="whitespace-pre-wrap">{formatResult(word, data)}</pre>
       )}

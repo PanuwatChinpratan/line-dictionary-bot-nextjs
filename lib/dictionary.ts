@@ -74,7 +74,7 @@ export function formatResult(word: string, result: ParsedResult): string {
     }
   }
   if (lines.length === 0) {
-    lines.push(`Sorry, I couldn't find a noun/verb definition for "${word}".`);
+    lines.push(`Sorry, I couldn't find a noun/verb definition for "${word}". (should be english word)`);
   }
   return lines.join("\n");
 }

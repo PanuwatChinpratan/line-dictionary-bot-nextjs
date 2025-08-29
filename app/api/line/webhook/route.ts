@@ -84,7 +84,10 @@ export async function POST(req: NextRequest) {
     events.map(async (event) => {
       const raw = event.message.text.trim();
       const word = raw.replace(/[^A-Za-z]/g, "").toLowerCase();
-      if (!word) return;
+        if (!word) {
+        await reply(event.replyToken, "Please include an English word");
+        return;
+      }
       try {
         const result: ParsedResult = await fetchDictionary(word);
         const message = formatResult(word, result);

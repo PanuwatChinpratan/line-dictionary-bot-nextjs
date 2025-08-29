@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Demo App",
+  title: "LINE Dictionary Bot App",
   description: "Demo App",
 };
 

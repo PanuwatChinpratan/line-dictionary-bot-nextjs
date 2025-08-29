@@ -13,6 +13,8 @@ export default function Home() {
           alt="QR Code"
           width={256}
           height={256}
+          priority
+           sizes="(max-width: 768px) 100vw, 256px"
         />
       </div>
     </main>

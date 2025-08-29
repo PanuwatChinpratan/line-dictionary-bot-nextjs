@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { z } from "zod";
 import { fetchDictionary, formatResult } from "../lib/dictionary";
+import { Button } from "@/components/ui/button";
 
 const wordSchema = z
   .string()
@@ -45,17 +46,16 @@ export default function DictionarySearch() {
 
       <form onSubmit={handleSubmit} className="flex gap-2">
         <input
+          name="word"
           className="rounded border px-2 py-1"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Enter an English word"
         />
-        <button
-          type="submit"
-          className="rounded bg-blue-500 px-3 py-1 text-white"
-        >
+
+        <Button type="submit" variant="outline" className="cursor-pointer">
           Search
-        </button>
+        </Button>
       </form>
       {validationError && (
         <p className="text-sm text-red-500">{validationError}</p>

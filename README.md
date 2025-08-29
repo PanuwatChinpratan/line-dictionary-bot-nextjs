@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# LINE Dictionary Bot
 
-## Getting Started
+A serverless LINE chatbot built with Next.js 15 and TypeScript. Send any English word and the bot replies with noun and verb definitions plus synonyms. Built as a coding test.
 
-First, run the development server:
+## Requirements fulfilled
+- Next.js App Router, deployable on Vercel
+- LINE Messaging API webhook (`POST /api/line/webhook`)
+- Dictionary lookups via `api.dictionaryapi.dev`
+- Optional synonyms (up to 5) for each part of speech
+- TypeScript types for dictionary responses and LINE events
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Local development
+1. Install dependencies
+   ```bash
+   npm install
+   ```
+2. Copy `.env.local.example` to `.env.local` and fill in your LINE credentials
+   ```bash
+   cp .env.local.example .env.local
+   ```
+3. Run the dev server
+   ```bash
+   npm run dev
+   ```
+
+  Visit `http://localhost:3000/` for a simple info page and `http://localhost:3000/qr` for the QR code.
+
+## Deploy (Vercel)
+Deploy this repository to Vercel. The project is serverless-ready and uses the Node.js runtime where needed.
+
+After deployment, set the webhook URL in the [LINE Developers console](https://developers.line.biz/) to:
+```
+https://<your-domain>/api/line/webhook
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Usage examples
+- Input: `Mango`
+  ```
+  ■ Noun: A tropical Asian fruit tree, Mangifera indica.
+  ■ Verb: To stuff and pickle (a fruit).
+  ```
+- Input: `Tiger`
+  ```
+  ■ Noun: Panthera tigris, a large predatory mammal of the cat family, indigenous to Asia.
+  ```
+- If no noun or verb found:
+  ```
+  Sorry, I couldn't find a noun/verb definition for "<word>".
+  ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## QR code
+Add your LINE Add Friend QR image to the `public/` directory and update `/app/qr/page.tsx` to reference it. The `/qr` route currently renders a placeholder box.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Environment variables
+Configure the following variables (see `.env.local.example`):
+```
+LINE_CHANNEL_SECRET=your_line_channel_secret
+LINE_CHANNEL_ACCESS_TOKEN=your_line_channel_access_token
+```
 
-## Learn More
+These are used for request verification and replying via the LINE Messaging API.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Sharing
+To share your bot, provide:
+- This GitHub repository
+- Your bot's LINE ID
+- The QR code (uploaded to `public/` and shown on `/qr`)

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import DictionarySearch from "./dictionary-search";
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
         Send an English word to the LINE bot to receive noun and verb
         definitions.
       </p>
+      <DictionarySearch />
       <h1 className="text-2xl font-bold">Add LINE Bot</h1>
       <p>Scan the QR code below to add the bot on LINE.</p>
       <div className="flex h-52 w-52 items-center justify-center rounded border border-dashed text-center text-sm text-gray-500">
